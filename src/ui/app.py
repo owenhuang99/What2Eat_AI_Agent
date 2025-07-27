@@ -24,7 +24,7 @@ import re
 import time
 
 from src.agent.agent import RestaurantAgent
-from src.utils.data_utils import load_health_data, update_health_data
+from src.utils.data_utils import load_health_data
 from src.utils.constants import HEALTH_REPORT_FORMAT, HEALTH_REPORT_TIPS, CHAT_INTERFACE_CSS, CHAT_HELP_TEXT
 from src.ui.components.new_user import new_user_workflow
 from src.ui.components.existing_user import existing_user_workflow

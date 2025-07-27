@@ -1,5 +1,7 @@
 [server]
 headless = true
+enableCORS = false
+enableXsrfProtection = false
 
 [global]
 developmentMode = false
