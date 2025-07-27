@@ -58,6 +58,11 @@ Notes
    streamlit run src/ui/app.py
    ```
 
+### Debug note
+1. If you run into path error when initializing streamlit, try the following:
+   a. Navigate the WHAT2EAT_AI_AGENT folder
+   b. run "export PYTHONPATH=$(pwd):$PYTHONPATH"
+
 ## Project Structure
 ```
 src/
