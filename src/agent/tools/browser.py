@@ -78,10 +78,10 @@ class BrowserTool:
             # Try to set Chrome binary location for cloud environments
             if self.is_cloud_environment:
                 possible_paths = [
-                    '/opt/chrome/chrome',
-                    '/usr/bin/google-chrome',
+                    '/usr/bin/chromium',        # Move this first for Streamlit Cloud
                     '/usr/bin/chromium-browser',
-                    '/usr/bin/chromium'
+                    '/opt/chrome/chrome',
+                    '/usr/bin/google-chrome'
                 ]
 
                 for path in possible_paths:
@@ -125,13 +125,18 @@ class BrowserTool:
             chrome_options.add_argument('--use-mock-keychain')
 
             # Set up the service
-            try:
-                # Try to use ChromeDriverManager first
-                service = Service(ChromeDriverManager().install())
-            except Exception as e:
-                self.logger.warning(f"ChromeDriverManager failed: {e}")
-                # Fallback to system chromedriver
+            if self.is_cloud_environment:
+                # In cloud environments, use system chromedriver
                 service = Service()  # Will use system PATH
+                self.logger.info("Using system chromedriver for cloud environment")
+            else:
+                try:
+                    # Only use ChromeDriverManager locally
+                    service = Service(ChromeDriverManager().install())
+                    self.logger.info("Using ChromeDriverManager for local environment")
+                except Exception as e:
+                    self.logger.warning(f"ChromeDriverManager failed: {e}")
+                    service = Service()
 
             # Create the driver
             self.driver = webdriver.Chrome(service=service, options=chrome_options)
